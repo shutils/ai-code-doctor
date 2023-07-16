@@ -1,0 +1,10 @@
+FROM python:3.10.12-slim
+
+WORKDIR /opt/app
+
+COPY Pipfile* ./
+COPY src ./src
+
+RUN pip install pipenv && pipenv sync --system
+
+ENTRYPOINT ["flask", "--app", "src/app", "run", "--host=0.0.0.0", "--port=5000"]
