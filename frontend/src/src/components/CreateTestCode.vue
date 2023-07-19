@@ -1,13 +1,16 @@
 <template>
   <v-container>
-    <v-text-field
+    <v-autocomplete
       v-for="(condition, index) in conditions"
       :key="index"
       v-model="conditions[index]"
       label="Condition"
       class="mb-4"
+      :id="'aiCodeDoctor' + index"
+      :items="items"
+      @keydown="echo"
       hide-details="auto">
-    </v-text-field>
+    </v-autocomplete>
     <v-btn @click="addConditions" class="mr-4">条件を追加</v-btn>
     <v-btn @click="removeConditions">条件を削除</v-btn>
     <v-textarea
@@ -39,6 +42,7 @@ export default defineComponent({
       answer: "",
       answer_preview: "",
       method: "",
+      items: ["hoge"]
     }
   },
   methods: {
@@ -47,6 +51,15 @@ export default defineComponent({
     },
     removeConditions() {
       this.conditions.splice(this.conditions.length - 1, 1);
+    },
+    echo(e) {
+      if (e.key == "Enter") {
+        if (!(Object.values(this.items).includes(e.target.value))) {
+          this.items.push(e.target.value)
+          const index = e.target.id.replace('aiCodeDoctor', '')
+          this.conditions[index] = e.target.value
+        }
+      }
     },
     async fetchMessage() {
       const me = this
