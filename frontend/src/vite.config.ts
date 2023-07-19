@@ -10,4 +10,12 @@ export default defineConfig({
 		vue(),
 		vuetify({ autoImport: true }),
 	],
+  server: {
+    host: true,
+    port: 5173,
+    hmr: {
+      host: "localhost",
+      port: 5173,
+    }
+  }
 })
