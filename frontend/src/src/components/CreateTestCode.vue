@@ -5,12 +5,15 @@
       :key="index"
       v-model="conditions[index]"
       label="Condition"
+      class="mb-4"
       hide-details="auto">
     </v-text-field>
-    <v-btn @click="addConditions">条件を追加</v-btn>
+    <v-btn @click="addConditions" class="mr-4">条件を追加</v-btn>
+    <v-btn @click="removeConditions">条件を削除</v-btn>
     <v-textarea
       v-model="method"
       label="関数を入力"
+      class="mt-4"
       auto-grow>
     </v-textarea>
     <v-btn @click="fetchMessage">送信</v-btn>
@@ -41,6 +44,9 @@ export default defineComponent({
   methods: {
     addConditions() {
       this.conditions.push("");
+    },
+    removeConditions() {
+      this.conditions.splice(this.conditions.length - 1, 1);
     },
     async fetchMessage() {
       const me = this
